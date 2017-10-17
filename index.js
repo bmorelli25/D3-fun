@@ -1,10 +1,10 @@
 const express = require('express')
 const app = express()
 
-app.use(express.static('2-data'))
+app.use(express.static('3-api'))
 
 app.get('/', function (req, res) {
-  res.sendfile('./2-data/index.html');
+  res.sendfile('./3-api/index.html');
 })
 
 app.listen(3000, function () {
