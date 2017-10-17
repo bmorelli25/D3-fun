@@ -1,8 +1,6 @@
 const h = 100, w = 400;
-let ds;
-let metrics = [];
 
-function buildLine(){
+function buildLine(ds){
     let line = d3.line()
     .x( (d) => (d.month - 20130001) / 3.25)
     .y( (d) => h - d.sales )
@@ -16,23 +14,29 @@ function buildLine(){
 
     let viz = svg.append('path')
         .attrs({
-            d: line(ds),
+            d: line(ds.monthlySales),
             stroke: 'purple',
             'stroke-width': 2,
             'fill': 'none'
         });
 }
 
-function showTotals(){
+function showHeader(ds){
+    d3.select('body').append('h1')
+        .text(`${ds.category} Sales (2013)`);
+}
+
+function showTotals(ds){
+    let metrics = [];
     let salesTotal = 0;
     let t = d3.select('body').append('table');
 
-    for (var i = 0; i < ds.length; i++){
-        salesTotal += ds[i]['sales'] * 1
+    for (var i = 0; i < ds['monthlySales'].length; i++){
+        salesTotal += ds['monthlySales'][i]['sales'] * 1
     }
 
     metrics.push(`Sales Total: ${salesTotal}`);
-    metrics.push(`Sales Avg: ${(salesTotal / ds.length).toFixed(2)}`);
+    metrics.push(`Sales Avg: ${(salesTotal / ds['monthlySales'].length).toFixed(2)}`);
 
     let tr = t.selectAll('tr')
         .data(metrics)
@@ -42,14 +46,19 @@ function showTotals(){
         .text( (d) => d );
 }
 
-d3.csv('MonthlySales.csv', (err, data) => {
+d3.json('MonthlySalesByCategoryMultiple.json', (err, data) => {
     if(err) {
         console.log(err);
     } else {
         console.log(data);
-        ds = data;
+        // ds = data;
     }
 
-    buildLine();
-    showTotals();
+    data.contents.forEach((ds) => {
+        showHeader(ds);
+        buildLine(ds);
+        showTotals(ds);
+    })
+
+
 });
