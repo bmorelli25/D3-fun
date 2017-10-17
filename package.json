@@ -1,0 +1,23 @@
+{
+  "name": "d3-fun",
+  "version": "1.0.0",
+  "description": "Playing around with D3",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bmorelli25/D3-fun.git"
+  },
+  "author": "brandon morelli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bmorelli25/D3-fun/issues"
+  },
+  "homepage": "https://github.com/bmorelli25/D3-fun#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
